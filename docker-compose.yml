@@ -1,0 +1,27 @@
+version: '3.4'
+
+services:
+  bandlabhomeassigment.api: 
+    container_name: bandlabhomeassigmentapi 
+    image: ${DOCKER_REGISTRY-}bandlabhomeassigmentapi
+    depends_on:
+      - bandlabhomeassigmentdb
+    build:
+      context: .
+      dockerfile: BandLabHomeAssigment.API/Dockerfile
+    volumes:
+      -  data-volume:/app/data
+    ports:
+     - 8001:80
+
+  bandlabhomeassigmentdb:
+    container_name: bandlabhomeassigmentdb
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    ports:
+      - 8002:1433
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=RSNkHXW1
+      
+volumes:
+  data-volume:
